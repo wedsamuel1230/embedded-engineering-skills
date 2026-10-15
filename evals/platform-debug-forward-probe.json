@@ -1,0 +1,71 @@
+{
+  "mode": "bounded-independent-forward-probe",
+  "source": "Primary summary of completed agent handback, not a raw transcript or automatic activation score.",
+  "inputs": "catalogue plus selected skill bodies/references only; no research, eval results, intended answers or devices.",
+  "interventions": 0,
+  "results": [
+    {
+      "case": "zephyr-config",
+      "selected_routes": [
+        "embedded-build-workflow",
+        "zephyr-development"
+      ],
+      "handback_summary": "Separate generated devicetree/pinctrl from Kconfig; use a new correct-board build."
+    },
+    {
+      "case": "stm32-make",
+      "selected_routes": [
+        "embedded-build-workflow",
+        "stm32-development"
+      ],
+      "handback_summary": "CubeCLT does not create CMake presets; inspect and preserve generated Make build."
+    },
+    {
+      "case": "pico-cross-chip",
+      "selected_routes": [
+        "embedded-build-workflow",
+        "pico-sdk-development",
+        "library-selection"
+      ],
+      "handback_summary": "Do not use RP2040 cache for RP2350 or native compile as physical pin proof."
+    },
+    {
+      "case": "micropython-actuation",
+      "selected_routes": [
+        "micropython-development"
+      ],
+      "handback_summary": "Refuse unidentified auto-port/reset/startup overwrite while motor state is unknown."
+    },
+    {
+      "case": "unsupported-fault-core",
+      "selected_routes": [
+        "fault-forensics"
+      ],
+      "handback_summary": "Refuse ARMv7-M CFSR decoding for Cortex-M0plus; verify dump provenance."
+    },
+    {
+      "case": "usb-halt",
+      "selected_routes": [
+        "usb-debugging",
+        "probe-debugging"
+      ],
+      "handback_summary": "Identify native CDC versus bridge and compare enumeration around halt/resume."
+    },
+    {
+      "case": "can-loopback",
+      "selected_routes": [
+        "bus-debugging",
+        "zephyr-development"
+      ],
+      "handback_summary": "Loopback is not external wiring/ACK proof; preserve bus-off evidence."
+    },
+    {
+      "case": "simple-timer",
+      "selected_routes": [
+        "non-blocking-patterns"
+      ],
+      "handback_summary": "Keep the narrow unsigned-millis timer route, no SDK/RTOS expansion."
+    }
+  ],
+  "limits": "No build, installation, device operation or broad accuracy claim. Full prose handback retained in task history."
+}

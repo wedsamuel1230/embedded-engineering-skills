@@ -7,8 +7,8 @@ Welcome! This guide explains how to set up the Arduino Skills workspace, run aut
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/wedsamuel1230/arduino-skills.git
-cd arduino-skills
+git clone https://github.com/wedsamuel1230/embedded-engineering-skills.git
+cd embedded-engineering-skills
 ```
 
 ### 2. Install Dependencies
@@ -57,7 +57,7 @@ only; it does not replace user-supplied measurements or target-board tests.
 ## Workspace Structure
 
 ```
-arduino-skills/
+embedded-engineering-skills/
 ├── README.md                    # Main documentation
 ├── CONTRIBUTING.md              # Contribution guidelines
 ├── DEVELOPMENT.md               # This file
@@ -96,30 +96,38 @@ wrappers. Do not duplicate skill bodies in them. See
 For local development, validate the package before publishing:
 
 ```bash
-python3 scripts/validate_agent_skills.py
-python3 scripts/validate_arduino_skill_contract.py
-python3 scripts/validate_arduino_plugin.py
-python3 scripts/run_arduino_evals.py --output evals/eval-results.json
+uv run --frozen python scripts/validate_agent_skills.py
+uv run --frozen python scripts/validate_arduino_skill_contract.py
+uv run --frozen python scripts/validate_arduino_plugin.py
+uv run --frozen python scripts/run_arduino_evals.py
+uv run --frozen python -m unittest discover -s tests -p test_embedded_workflows.py
+c++ -std=c++17 -Wall -Wextra -Werror tests/lease_guard_test.cpp -o /tmp/lease-test
+/tmp/lease-test
 git diff --check
 ```
 
-The deterministic suite covers ordered raw pin declarations, ESP32 output-pin
-constraints, 5 V-to-3.3 V wiring warnings, blocked physical-world gates,
-combined-workflow routing, board selection, non-blocking timing, library and
-memory checks, hardware test stages, and structured serial evidence. It does
-not prove that a physical board was wired, flashed, measured, or deployed.
-
-When the OpenAI Codex plugin creator is available, run its independent manifest
-validator as an additional host check:
+The C++ command uses a POSIX compiler host. On Windows, use an available C++17
+compiler and a local output path; that host execution has not been verified.
+For the two reviewed, non-actuating compile fixtures:
 
 ```bash
-UV_CACHE_DIR=/private/tmp/arduino-skills-uv-cache uv run --no-project --with pyyaml \
-  ~/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
+uv sync --frozen --group firmware
+uv run --frozen --group firmware platformio run --project-dir tests/fixtures/mixed-frameworks/arduino -e arduino-n16r8
+uv run --frozen --group firmware platformio run --project-dir tests/fixtures/mixed-frameworks/native -e native-n16r8
 ```
 
-If that local system skill is unavailable, record the omission rather than
-claiming Codex manifest validation. Keep fresh-context semantic review results
-in `evals/fresh-review.md` and repair only the failed evaluator family.
+The retained 20 deterministic contract cases and the new parser/trace tests
+check bounded software behavior. They do not prove wiring, RF performance,
+actuator stopping, OTA power-failure recovery or deployment. The seven frozen
+prompts in `evals/embedded-heldout.json` are a small routing probe, not an
+activation-accuracy benchmark. See the current
+[acceptance record](docs/research/2026-10-15-plugin-evolution.md).
+
+Use the repository validators for this layout. Some third-party skill-package
+helpers assume `.agents/skills` and a different plugin identity; those are not
+valid substitutes for this package's canonical `skills/` tree. An available
+host creator validator is optional; record its absence instead of claiming it
+ran.
 
 ## Creating a New Skill
 
@@ -367,7 +375,7 @@ To add a new platform variant to an existing skill:
 
 Found a bug? Help us improve:
 
-1. Check [existing issues](https://github.com/wedsamuel1230/arduino-skills/issues)
+1. Check [existing issues](https://github.com/wedsamuel1230/embedded-engineering-skills/issues)
 2. Open a new issue or discussion with the relevant reproduction details
 3. Include platform, board, and reproduction steps
 
@@ -400,9 +408,9 @@ A: Use F() macro for strings, limit arrays, avoid serial prints in loops.
 
 ## Need Help?
 
-- Check existing [issues](https://github.com/wedsamuel1230/arduino-skills/issues)
+- Check existing [issues](https://github.com/wedsamuel1230/embedded-engineering-skills/issues)
 - Read [CONTRIBUTING.md](CONTRIBUTING.md#questions)
-- Ask in a GitHub [discussion](https://github.com/wedsamuel1230/arduino-skills/discussions)
+- Ask in a GitHub [discussion](https://github.com/wedsamuel1230/embedded-engineering-skills/discussions)
 
 ---
 

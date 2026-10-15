@@ -14,6 +14,7 @@ would be expensive.
 - `references/ota-safe-sketch.md` - minimum sketch-side OTA contract and guardrails
 - `references/discovery-and-network-ports.md` - IDE, mDNS, IP reachability, and disappearing network port triage
 - `references/recovery-and-rollback.md` - rollout safety, rollback, and last-resort recovery planning
+- `references/native-espidf-rollback.md` - native app slots, boot acceptance, stopped-output acknowledgement and rollback-compatible NVS/calibration schemas
 - `../../docs/board-support/uno-r4-family.md` - Uno R4 Minima and Uno R4 WiFi board-family caveats
 
 ## When to Use
@@ -32,6 +33,8 @@ preparing for later OTA deployment.
 ## Workflow
 
 1. Confirm the board family:
+   - Native ESP-IDF -> open `references/native-espidf-rollback.md`; build intake
+     stays with `embedded-build-workflow`, not Arduino sketch instructions.
    - ESP32 or Nano ESP32 -> open `references/ota-safe-sketch.md`
    - Uno R4 WiFi -> also open `../../docs/board-support/uno-r4-family.md`
 2. Separate discovery failures from sketch failures:

@@ -8,6 +8,12 @@ metadata:
 
 # Arduino Serial Monitor
 
+For a desktop visualization/bench console, read
+[desktop-console guidance](references/desktop-console.md). Wireless transport
+and trace semantics belong to `wireless-telemetry`; do not duplicate its driver
+or measurement workflow here. Native ESP-IDF logs are valid inputs to serial
+diagnosis and do not imply an Arduino framework.
+
 This skill provides advanced tools for reading and analyzing serial monitor data from Arduino boards, enhancing the debugging experience beyond the basic Arduino IDE serial monitor.
 
 ## Features

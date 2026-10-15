@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+import struct
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -41,6 +42,20 @@ BASELINE_SKILLS = {
     "sensor-calibration-workbench",
 }
 NEW_SKILLS = {
+    "zephyr-development",
+    "stm32-development",
+    "pico-sdk-development",
+    "micropython-development",
+    "probe-debugging",
+    "fault-forensics",
+    "bus-debugging",
+    "boot-flash-recovery",
+    "memory-timing-debugging",
+    "usb-debugging",
+
+    "embedded-build-workflow",
+    "realtime-control-design",
+    "wireless-telemetry",
     "pin-assignment",
     "board-support",
     "board-selection",
@@ -171,10 +186,17 @@ def validate_manifests(errors: list[str]) -> None:
     codex_manifest = load_json(ROOT / ".codex-plugin/plugin.json", errors)
     claude_manifest = load_json(ROOT / ".claude-plugin/plugin.json", errors)
     cursor_manifest = load_json(ROOT / ".cursor-plugin/plugin.json", errors)
-    if isinstance(root_manifest, dict) and root_manifest.get("skills") != "./skills/":
-        errors.append("root plugin.json must point to ./skills/")
+    for label, manifest in (("root", root_manifest), ("Codex", codex_manifest),
+                            ("Claude", claude_manifest), ("Cursor", cursor_manifest)):
+        if isinstance(manifest, dict):
+            if manifest.get("name") != "embedded-engineering-skills":
+                errors.append(f"{label} plugin identity differs from embedded-engineering-skills")
+            if isinstance(root_manifest, dict) and manifest.get("version") != root_manifest.get("version"):
+                errors.append(f"{label} version differs from root manifest")
+    if isinstance(root_manifest, dict) and "skills" in root_manifest:
+        errors.append("portable root manifest must discover skills/ by convention")
     if isinstance(codex_manifest, dict):
-        if codex_manifest.get("name") != "arduino-skills":
+        if codex_manifest.get("name") != "embedded-engineering-skills":
             errors.append("Codex manifest name mismatch")
         if codex_manifest.get("skills") != "./skills/":
             errors.append("Codex manifest must point to ./skills/")
@@ -184,8 +206,24 @@ def validate_manifests(errors: list[str]) -> None:
                 errors.append(f"Codex manifest missing interface.{field}")
         if "hooks" in codex_manifest:
             errors.append("Codex manifest must not declare unsupported hooks")
+        for field in ("logo", "composerIcon"):
+            value = interface.get(field)
+            if not isinstance(value, str) or not value.startswith("./") or ".." in Path(value).parts:
+                errors.append(f"Codex interface.{field} must be a bundled ./ path")
+                continue
+            icon = (ROOT / value).resolve()
+            if not icon.is_relative_to(ROOT.resolve()) or not icon.is_file() or icon.stat().st_size > 5 * 1024 * 1024:
+                errors.append(f"Codex interface.{field} is missing, escaping or oversized")
+                continue
+            header = icon.read_bytes()[:29]
+            if len(header) < 29 or header[:8] != b"\x89PNG\r\n\x1a\n":
+                errors.append(f"Codex interface.{field} requires a validated PNG in this package")
+                continue
+            width, height = struct.unpack(">II", header[16:24])
+            if width != height or not 48 <= width <= 4096 or header[25] != 6:
+                errors.append(f"Codex interface.{field} must be square RGBA, 48..4096 pixels")
     for label, manifest in (("Claude", claude_manifest), ("Cursor", cursor_manifest)):
-        if isinstance(manifest, dict) and manifest.get("name") != "arduino-skills":
+        if isinstance(manifest, dict) and manifest.get("name") != "embedded-engineering-skills":
             errors.append(f"{label} manifest name mismatch")
 
     for path, kind in ((ROOT / ".agents/plugins/marketplace.json", "Codex"), (ROOT / ".claude-plugin/marketplace.json", "Claude"), (ROOT / ".cursor-plugin/marketplace.json", "Cursor")):
@@ -196,9 +234,9 @@ def validate_manifests(errors: list[str]) -> None:
         if not isinstance(plugins, list) or not plugins:
             errors.append(f"{kind} marketplace has no plugins")
             continue
-        matches = [item for item in plugins if isinstance(item, dict) and item.get("name") == "arduino-skills"]
+        matches = [item for item in plugins if isinstance(item, dict) and item.get("name") == "embedded-engineering-skills"]
         if len(matches) != 1:
-            errors.append(f"{kind} marketplace must contain exactly one arduino-skills entry")
+            errors.append(f"{kind} marketplace must contain exactly one embedded-engineering-skills entry")
             continue
         entry = matches[0]
         if kind == "Codex":
@@ -245,9 +283,6 @@ def validate_boards(errors: list[str]) -> None:
     s3 = (board_dir / "esp32-s3-devkit.md").read_text(encoding="utf-8")
     if "Do not carry the classic ESP32 GPIO34-39 input-only rule" not in s3:
         errors.append("ESP32-S3 reference lacks the classic-ESP32 distinction")
-    research = Path("/Users/wed/.codex/workflows/arduino-mainstream-plugin-2026-08-10/research/board-specs.md")
-    if research.is_file() and "GPIO34-39 are input-only on ESP32-S3" in research.read_text(encoding="utf-8"):
-        errors.append("board research still claims classic GPIO34-39 input-only behavior on S3")
     ledger = board_dir / "source-ledger.md"
     if not ledger.is_file():
         errors.append("missing board source ledger: references/boards/source-ledger.md")

@@ -4,6 +4,12 @@ Choose a toolchain from the project source of truth and the user's existing
 environment. A skill may provide commands for one toolchain, but it must state
 that boundary.
 
+For PlatformIO, native ESP-IDF, mixed frameworks or SDK migration, use
+`embedded-build-workflow` and its
+[framework branches](../../embedded-build-workflow/references/toolchain-branches.md).
+Arduino CLI is a branch, not the default for all embedded code. Consult the
+[support matrix](../../../docs/platform-support.md) for validated combinations.
+
 | Toolchain | Record before implementation | Typical proof |
 |---|---|---|
 | Arduino IDE | IDE version, board package, selected board, port, libraries | compile report, upload log, serial output |

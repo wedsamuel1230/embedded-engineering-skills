@@ -419,7 +419,7 @@ def main() -> int:
     definition = load_json(EVALS)
     cases = [evaluate_case(case) for case in definition["evals"]]
     payload = {
-        "suite": "arduino-skills",
+        "suite": "embedded-engineering-skills",
         "evaluation_mode": definition.get("evaluation_mode", "forward-contract"),
         "prompt_count": len(cases),
         "cases": cases,

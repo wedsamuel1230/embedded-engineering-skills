@@ -1,0 +1,26 @@
+[project]
+name = "embedded-engineering-skills-checks"
+version = "2.0.0"
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[dependency-groups]
+firmware = [
+    "platformio==6.2.0",
+    "intelhex==2.3.0",
+    "pyserial==3.5",
+    "pyelftools==0.33",
+    "pyyaml==6.0.3",
+    "pykwalify==1.8.0",
+    "packaging==23.1",
+    "cryptography==50.0.2",
+    "click==8.1.8",
+    "cbor2==5.4.6",
+    "jsonschema==4.25.1",
+]
+micropython = [
+    "mpremote==1.26.0",
+]
+
+[tool.uv]
+package = false

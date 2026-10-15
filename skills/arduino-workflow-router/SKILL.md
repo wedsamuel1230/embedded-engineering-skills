@@ -4,7 +4,7 @@ description: Route Arduino and embedded-system requests across Arduino IDE, Ardu
 metadata: {triggers: "combined Arduino workflow, embedded routing, board intake, toolchain selection"}
 ---
 
-# Arduino Workflow Router
+# Embedded Workflow Router
 
 Use this skill as the concise entrypoint for complete or cross-discipline
 embedded work. For a focused task with a confirmed board and one stage, load the
@@ -67,6 +67,16 @@ framework, toolchain, host, dependency versions, and desired proof stage.
 
 | Need | Load next | Evidence focus |
 |---|---|---|
+| Zephyr Development | `zephyr-development` | target-specific evidence |
+| STM32 Development | `stm32-development` | target-specific evidence |
+| Pico SDK Development | `pico-sdk-development` | target-specific evidence |
+| MicroPython Development | `micropython-development` | target-specific evidence |
+| Probe Debugging | `probe-debugging` | target-specific evidence |
+| Fault Forensics | `fault-forensics` | target-specific evidence |
+| Bus Debugging | `bus-debugging` | target-specific evidence |
+| Boot and Flash Recovery | `boot-flash-recovery` | target-specific evidence |
+| Memory and Timing Debugging | `memory-timing-debugging` | target-specific evidence |
+| USB Debugging | `usb-debugging` | target-specific evidence |
 | Requirements or board choice | `board-selection`, then `board-support`, then `arduino-project-builder` | decision and design |
 | Named board reference or capability lookup | `board-support`, then the relevant specialist | exact identity and source-backed constraints |
 | Pin map or GPIO declarations | `board-support`, then `pin-assignment`, then `wiring-safety-check` | board constraints and hardware |
@@ -76,6 +86,9 @@ framework, toolchain, host, dependency versions, and desired proof stage.
 | Library or framework dependency | `library-selection`, then the code/project skill | compatibility and memory |
 | Datasheet, component, or protocol uncertainty | `datasheet-interpreter`, `i2c-bringup-diagnostician` | hardware assumptions |
 | Compile, board discovery, upload, or port | `arduino-cli-skill` plus `error-message-explainer` | build and upload |
+| PlatformIO, native ESP-IDF, mixed builds, CI or SDK migration | `embedded-build-workflow`; use `arduino-cli-skill` only for an Arduino CLI branch | explicit framework/manager and build matrix |
+| Control-loop deadline, actuator ownership, overload or action timing | `realtime-control-design`, then `freertos-patterns` for primitives | design budget and measured timing |
+| UDP/ESP-NOW telemetry, AP+STA coexistence or radio trace analysis | `wireless-telemetry`, then `arduino-serial-monitor` for capture/desktop integration | freshness, protocol and measurement scope |
 | Runtime logs or field symptoms | `arduino-serial-monitor`, `error-message-explainer`, `hardware-tdd` | hardware and system |
 | Timing, blocking, or watchdog risk | `non-blocking-patterns`, `hardware-tdd` | build and system |
 | Memory or footprint risk | `memory-budgeting`, `library-selection` | build and runtime |
@@ -87,6 +100,14 @@ framework, toolchain, host, dependency versions, and desired proof stage.
 | Multi-session, physical, or recovery work | `embedded-project-loop` first, then this router | durable state and user-owned gate |
 
 ## Combined Workflows
+
+Toolchain precedence: when a repository selects PlatformIO or a native SDK,
+`embedded-build-workflow` owns build intake. Do not route native `app_main`,
+Zephyr, Pico SDK or Rust projects to Arduino CLI by default. See the
+[support matrix](../../docs/platform-support.md) before claiming a framework,
+target or host is validated. Consult the active
+[BottleSumo lessons](../../docs/research/2026-10-15-bottlesumo-lessons.md) for mixed
+builds, separate flash/PSRAM settings, wireless evidence, OTA and bench control.
 
 Skills **can be used together**. Keep one owner for each decision and pass its
 artifacts to the next skill. For a combined request, use this concise default

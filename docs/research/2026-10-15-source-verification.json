@@ -1,0 +1,66 @@
+[
+  {
+    "repo": "beriberikix/zephyr-agent-skills",
+    "revision": "ed63cdfb8cdfbeb5946ea39c33f4aa6bcf3a5cce",
+    "file": "SKILL.md",
+    "license": "Apache-2.0",
+    "commit_date": "2026-05-18T20:57:40Z",
+    "body_available": "SKILL.md"
+  },
+  {
+    "repo": "magnus919/agent-skills",
+    "revision": "b3b45651ffa2ca882911c2ebfeeab8e3dc7b53ce",
+    "file": "esp32-development/SKILL.md",
+    "license": "MIT",
+    "commit_date": "2026-10-13T18:21:51Z",
+    "body_available": "esp32-development/SKILL.md"
+  },
+  {
+    "repo": "claudius-ars/embedded-agent-skills",
+    "revision": "51039fe6400b91e792ff723879a68134ceac75ff",
+    "file": "embedded-agent-skills/gpio-config/SKILL.md",
+    "license": "MIT",
+    "commit_date": "2026-02-08T07:09:18Z",
+    "body_available": "embedded-agent-skills/gpio-config/SKILL.md"
+  },
+  {
+    "repo": "ezrover/ESP32-AI-Agent-Skill",
+    "revision": "124d298e4ccaa737dbf6d26bbae47722e17f3097",
+    "file": "skills/esp32/SKILL.md",
+    "license": "MIT",
+    "commit_date": "2026-04-14T19:50:45Z",
+    "body_available": "skills/esp32/SKILL.md"
+  },
+  {
+    "repo": "lhbsaa/embedded-dev-skill",
+    "revision": "69267c3c65157e187250551baf22f5c49311ef91",
+    "file": "SKILL.md",
+    "license": "MIT",
+    "commit_date": "2026-07-21T17:17:01Z",
+    "body_available": "SKILL.md"
+  },
+  {
+    "repo": "rovinax/embedded-skills",
+    "revision": "022ce31b469b1a1d0c1261c2c8d0f3e07b2c0bbc",
+    "file": "skills/embedded-architecture/SKILL.md",
+    "license": "MIT",
+    "commit_date": "2026-05-24T05:26:10Z",
+    "body_available": "skills/embedded-architecture/SKILL.md"
+  },
+  {
+    "repo": "awknode/hermes-agent-skills",
+    "revision": "c47f6044826bbad2f593629815f95c1ce87b3e78",
+    "file": "esp32-development/SKILL.md",
+    "license": "MIT",
+    "commit_date": "2026-07-27T14:06:55Z",
+    "body_available": "esp32-development/SKILL.md"
+  },
+  {
+    "repo": "mohitmishra786/low-level-dev-skills",
+    "revision": "bdc58472fa9f309ed1b3f7d985a0d8e9bd8f4608",
+    "file": "skills/embedded/embedded-rust/SKILL.md",
+    "license": "MIT",
+    "commit_date": "2026-06-27T12:04:03Z",
+    "body_available": "skills/embedded/embedded-rust/SKILL.md"
+  }
+]

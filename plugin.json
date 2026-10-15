@@ -1,15 +1,53 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "arduino-skills",
-  "version": "1.8.0",
-  "description": "Toolchain-neutral, hardware-aware Arduino and embedded development skills.",
+  "name": "embedded-engineering-skills",
+  "version": "2.0.0",
+  "description": "Embedded workflows for Arduino, ESP-IDF, Zephyr, STM32Cube, Pico SDK and MicroPython, with target-specific debugging and explicit evidence.",
   "author": {
-    "name": "arduino-skills contributors",
-    "url": "https://github.com/wedsamuel1230/arduino-skills"
+    "name": "embedded-engineering-skills contributors",
+    "url": "https://github.com/wedsamuel1230/embedded-engineering-skills"
   },
-  "homepage": "https://github.com/wedsamuel1230/arduino-skills",
-  "repository": "https://github.com/wedsamuel1230/arduino-skills",
+  "homepage": "https://github.com/wedsamuel1230/embedded-engineering-skills",
+  "repository": "https://github.com/wedsamuel1230/embedded-engineering-skills",
   "license": "MIT",
-  "keywords": ["arduino", "embedded", "esp32", "rp2040", "hardware", "firmware"],
-  "skills": "./skills/"
+  "keywords": [
+    "embedded",
+    "firmware",
+    "arduino",
+    "esp32",
+    "esp-idf",
+    "platformio",
+    "rtos",
+    "hardware",
+    "zephyr",
+    "rp2040",
+    "stm32",
+    "pico-sdk",
+    "micropython",
+    "debugging"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Embedded Engineering Skills",
+        "shortDescription": "Build and debug embedded",
+        "longDescription": "Embedded workflows for Arduino, ESP-IDF, Zephyr, STM32Cube, Pico SDK and MicroPython, with target-specific debugging and explicit evidence.",
+        "developerName": "embedded-engineering-skills contributors",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Analyze",
+          "Generate",
+          "Test",
+          "Debug"
+        ],
+        "defaultPrompt": [
+          "Inspect and reproduce this mixed embedded build workflow.",
+          "Design task ownership and timing for this controller.",
+          "Diagnose wireless telemetry freshness and coexistence."
+        ],
+        "logo": "./assets/embedded-engineering-logo.png",
+        "composerIcon": "./assets/embedded-engineering-logo.png"
+      }
+    }
+  }
 }

@@ -1,0 +1,33 @@
+# Minimal F401 compile fixture dependency closure from Zephyr 4.3.0.
+manifest:
+  defaults:
+    remote: upstream
+  remotes:
+  - name: upstream
+    url-base: https://github.com/zephyrproject-rtos
+  - name: babblesim
+    url-base: https://github.com/BabbleSim
+  group-filter:
+  - -babblesim
+  - -optional
+  projects:
+  - name: cmsis
+    revision: 512cc7e895e8491696b61f7ba8066b4a182569b8
+    path: modules/hal/cmsis
+    groups:
+    - hal
+  - name: cmsis_6
+    repo-path: CMSIS_6
+    revision: 30a859f44ef8ab4dc8f84b03ed586fd16ccf9d74
+    path: modules/hal/cmsis_6
+    groups:
+    - hal
+  - name: hal_stm32
+    revision: 286dd285b5bb4fddafdfff27b5405264e5a61bfe
+    path: modules/hal/stm32
+    groups:
+    - hal
+  self:
+    path: zephyr
+    west-commands: scripts/west-commands.yml
+    import: submanifests
