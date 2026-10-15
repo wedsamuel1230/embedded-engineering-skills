@@ -78,7 +78,9 @@ Battery terminals       | Rated voltage   | Dead/discharged battery
 
 ### Phase 2: Ground Continuity
 
-**Critical Rule:** All grounds must be connected together.
+**Check the design:** Non-isolated logic normally needs a shared reference.
+Preserve intentional isolation; do not bond isolated/high-voltage domains just
+to satisfy a continuity test. Power down before continuity/resistance tests.
 
 ```
 Multimeter: Set to CONTINUITY (beep mode)

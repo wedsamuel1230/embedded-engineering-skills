@@ -1,20 +1,25 @@
-# arduino-skills
+# Embedded Engineering Skills
 
-![Status](https://img.shields.io/badge/version-1.8.0-blue)
-![Skills](https://img.shields.io/badge/skills-30%20packages%20on%20main-brightgreen)
+![Embedded Engineering Skills logo](assets/embedded-engineering-logo.png)
+
+Package/repository ID: `embedded-engineering-skills`. Executable support is
+scoped to recorded framework, target and host fixtures.
+
+![Status](https://img.shields.io/badge/version-2.0.0-blue)
+![Skills](https://img.shields.io/badge/skills-43%20skills%20candidate-brightgreen)
 ![Platform](https://img.shields.io/badge/platform-Arduino%20%7C%20embedded-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Marketplace](https://img.shields.io/badge/marketplace-claude%20%26%20gemini-orange)
 
 > Professional Arduino/embedded systems skills and maker tools for development, education, and prototyping.  
-> v1.8.0: toolchain-neutral,
+> v2.0.0 review candidate: explicit multi-framework routing,
 > board-aware Arduino skills with plugin packaging,
 > physical-world evidence gates, and composable lifecycle workflows for OTA deployment, calibration,
 > field-power triage, and I2C bring-up.
 
 ## 📋 Table of Contents
 
-- [arduino-skills](#arduino-skills)
+- [Embedded Engineering Skills](#embedded-engineering-skills)
   - [📋 Table of Contents](#-table-of-contents)
   - [🔍 Overview](#-overview)
   - [🤖 How Skills Work](#-how-skills-work)
@@ -47,7 +52,7 @@
 
 ## 🔍 Overview
 
-This collection provides production-ready skills for Arduino and maker projects:
+This collection provides focused engineering workflows for existing embedded projects:
 
 - **Arduino Core Skills** - Hardware patterns, timing, communication, FreeRTOS, and CLI workflows
 - **Maker Tools** - Debugging, serial monitoring, BOM generation, power planning, documentation, diagrams
@@ -60,7 +65,7 @@ and vendor-specific tools. The exact board, framework, versions, and hardware
 evidence determine what can be claimed for a task.
 
 All skills follow a consistent structure with:
-- ✅ Copy-paste ready code that compiles without warnings
+- ✅ Explicit target/framework boundaries and reproducible verification commands
 - ✅ Verification steps with expected outputs
 - ✅ Common pitfalls with corrections
 - ✅ Engineering rationale explaining "why"
@@ -69,7 +74,7 @@ All skills follow a consistent structure with:
 
 ## 🤖 How Skills Work
 
-**arduino-skills** uses the **Agent Skills** open format for self-contained,
+**Embedded Engineering Skills** uses the **Agent Skills** open format for self-contained,
 interoperable agent capabilities. Each skill is a folder containing:
 
 - **SKILL.md** — Instructions with YAML frontmatter (`name`,
@@ -104,7 +109,7 @@ board family, or a successful compile as proof of system behavior.
 ### Quick Install (Recommended and Easiest)
 
 ```bash
-npx skills add wedsamuel1230/arduino-skills
+npx skills add wedsamuel1230/embedded-engineering-skills
 ```
 
 ### Plugin Hosts
@@ -114,9 +119,9 @@ the major hosts:
 
 | Host | Install or test command | Adapter |
 |---|---|---|
-| Agent Skills CLI | `npx skills add wedsamuel1230/arduino-skills` | `skills/` |
-| Codex | `codex plugin marketplace add /path/to/arduino-skills` then `codex plugin add arduino-skills@arduino-skills` | `.codex-plugin/` |
-| Claude Code | `claude --plugin-dir /path/to/arduino-skills` | `.claude-plugin/` |
+| Agent Skills CLI | `npx skills add wedsamuel1230/embedded-engineering-skills` | `skills/` |
+| Codex | `codex plugin marketplace add /path/to/embedded-engineering-skills` then `codex plugin add embedded-engineering-skills@embedded-engineering-skills` | `.codex-plugin/` |
+| Claude Code | `claude --plugin-dir /path/to/embedded-engineering-skills` | `.claude-plugin/` |
 | Cursor | Open/install the repo as a plugin | `.cursor-plugin/` |
 
 See [docs/plugin-distribution.md](docs/plugin-distribution.md) for published
@@ -126,8 +131,8 @@ marketplace flows, wrapper conventions, and validation commands.
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/wedsamuel1230/arduino-skills.git
-cd arduino-skills
+git clone --branch codex/universal-embedded-skills https://github.com/wedsamuel1230/embedded-engineering-skills.git
+cd embedded-engineering-skills
 
 ```
 
@@ -337,11 +342,34 @@ flowchart TD
 
 ## 📱 Platform Support
 
-| Platform | SRAM | Features | Skills Supported |
-|----------|------|----------|------------------|
-| **Arduino UNO/Nano** | 2KB | Basic I/O, ADC | All (with F() macro) |
-| **ESP32** | 520KB | WiFi, BLE, dual-core, FreeRTOS | All + IoT projects |
-| **RP2040 (Pico)** | 264KB | Dual-core, PIO, USB host | All (no WiFi unless Pico W) |
+See [the evidence-scoped support matrix](docs/platform-support.md). A named
+framework or board profile is reference support; only a recorded build/host or
+hardware test earns that stronger claim. There is no blanket all-platform badge.
+
+| Framework/platform | Current scope |
+|---|---|
+| Arduino ESP32-S3 N16R8 | pinned compile fixture; see acceptance record |
+| Native ESP-IDF ESP32-S3 N16R8 | pinned PlatformIO compile fixture; see acceptance record |
+| Arduino AVR/Renesas and RP2040 | existing board/skill references; target builds must be run |
+| Zephyr 4.3 / STM32Cube F4 / Pico SDK 2.2 / MicroPython Unix | native procedures and dedicated build fixtures; exact evidence in matrix |
+
+### Native, control and wireless workflows
+
+| Skill | Useful output |
+|---|---|
+| [embedded-build-workflow](skills/embedded-build-workflow/SKILL.md) | project/environment matrix, offline intake, SDK/memory provenance checks |
+| [realtime-control-design](skills/realtime-control-design/SKILL.md) | task/resource ownership, action/deadline budget and overload plan |
+| [wireless-telemetry](skills/wireless-telemetry/SKILL.md) | transport/freshness contract, AP+STA coexistence and explicit CSV analysis |
+
+```sh
+uv run skills/embedded-build-workflow/scripts/inspect_build.py --project tests/fixtures/mixed-frameworks
+uv run skills/wireless-telemetry/scripts/analyze_trace.py TRACE.csv
+```
+
+Native OTA and desktop-console guidance extends the existing OTA guardian and
+serial monitor. One shared bench-lease contract owns command authority. See
+[research and changes](docs/research/2026-10-15-plugin-evolution.md) and the
+[identity migration](docs/identity-migration.md).
 
 ### Board-Specific Optimization
 
@@ -440,20 +468,17 @@ and Agent Skills CLI adapters.
 Before publishing a release, run:
 
 ```bash
-python3 scripts/validate_agent_skills.py
-python3 scripts/validate_arduino_skill_contract.py
-python3 scripts/validate_arduino_plugin.py
-python3 scripts/run_arduino_evals.py --output evals/eval-results.json
-UV_CACHE_DIR=/private/tmp/arduino-skills-uv-cache uv run --no-project --with pyyaml \
-  /Users/wed/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
+uv run --frozen python scripts/validate_agent_skills.py
+uv run --frozen python scripts/validate_arduino_skill_contract.py
+uv run --frozen python scripts/validate_arduino_plugin.py
+uv run --frozen python scripts/run_arduino_evals.py
+uv run --frozen python -m unittest discover -s tests -p test_embedded_workflows.py
+git diff --check
 ```
 
-For release `v1.8.0`, the tag and push commands are:
-
-```bash
-git tag -a v1.8.0 -m "Release v1.8.0"
-git push origin main v1.8.0
-```
+Version 2.0.0 is a review candidate. Publication and tags need a separate authorized release. The user requested
+repository/plugin identity migration; see the [migration record](docs/identity-migration.md)
+for source, remote and installed-host state.
 
 Suggested repository topics for hosting platforms:
 
@@ -523,7 +548,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md#submitting-a-new-skill) for the complete p
 | [evals/evals.json](evals/evals.json) | Prompt-level routing and loop-engine evaluation cases |
 | [CHANGELOG.md](CHANGELOG.md) | Version history and release notes |
 | [docs/research/](docs/research/) | Archived discovery notes and pain-point research |
-| [docs/workflows/](docs/workflows/) | Archived PRD, plan, and verification artifacts |
+| [docs/research/2026-10-15-plugin-evolution.md](docs/research/2026-10-15-plugin-evolution.md) | Current research, consultation and acceptance record |
 
 ---
 
@@ -538,3 +563,23 @@ See [LICENSE](LICENSE) for details.
 See [CHANGELOG.md](CHANGELOG.md) for the complete version history and release notes.
 
 ---
+
+
+## Platforms, debugging and catalogue (2.0)
+
+The requested package/repository identity is `embedded-engineering-skills`.
+[Migration status](docs/identity-migration.md) distinguishes source, remote and
+installed-host state. The 43 bundles include native Zephyr, STM32Cube, Pico SDK
+and MicroPython procedures. Rust is deferred; historical research is retained
+only for source lineage.
+
+Browse [catalog/README.md](catalog/README.md): actual category folders index
+platforms, debugging/recovery, build/workflow, runtime/connectivity,
+hardware/power, sensors/memory, and documentation. Canonical entrypoints remain
+`skills/<name>/SKILL.md` to avoid relying on host-specific recursive discovery.
+
+Six new debugging jobs cover probe/GDB sessions, architecture-scoped fault
+forensics, SPI/UART/CAN transactions, boot/flash recovery, runtime memory/timing
+and USB. Existing I2C, serial and circuit diagnosis retain their own scope.
+See [validated platform combinations](docs/platform-support.md) and
+[build-only fixture commands](tests/fixtures/platforms/README.md).

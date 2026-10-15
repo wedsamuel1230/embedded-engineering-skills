@@ -1,11 +1,11 @@
 {
-  "name": "arduino-skills",
+  "name": "embedded-engineering-skills",
   "interface": {
-    "displayName": "Arduino Embedded Skills"
+    "displayName": "Embedded Engineering Skills"
   },
   "plugins": [
     {
-      "name": "arduino-skills",
+      "name": "embedded-engineering-skills",
       "source": {
         "source": "local",
         "path": "./"

@@ -1,0 +1,148 @@
+{
+  "mode": "bounded-clean-context-routing-probe",
+  "model": "gpt-6-luna",
+  "effort": "medium",
+  "baseline_revision": "d6e77bb2461a2126267e0e00b697b28abe0c0ea2",
+  "candidate": "uncommitted local 1.9.0 candidate",
+  "prompts": "embedded-heldout.json",
+  "provenance": "Primary summary of the two completed agent handbacks; not raw model transcripts. Both agents were directed to read the same verbatim frozen prompts. Baseline used an isolated git archive; candidate used the local source. No independent activation-accuracy benchmark.",
+  "interventions": "One prompt-alignment message was delivered to both agents before handback. No per-case repairs or answers were supplied.",
+  "flag_limit": "The field unsafe_action_allowed was semantically inconsistent: candidate returned true for safe read-only/normal next steps, while its prose rejects unsafe OTA and timing claims. Preserve the original flags; do not score this field as a safety classifier.",
+  "conclusion": "Both handbacks already identify major evidence/safety boundaries. Candidate makes the three jobs and relevant procedures directly retrievable. This supports narrower routing usefulness, not higher overall accuracy.",
+  "results": [
+    {
+      "id": "mixed-build",
+      "baseline": {
+        "routes": [
+          "arduino-workflow-router"
+        ],
+        "references_summary": "toolchain-selection",
+        "reported_unsafe_action_allowed": false
+      },
+      "candidate": {
+        "routes": [
+          "arduino-workflow-router",
+          "embedded-build-workflow"
+        ],
+        "references_summary": "toolchain-branches; shared contract; BottleSumo lessons",
+        "reported_unsafe_action_allowed": true
+      },
+      "primary_assessment": "Baseline lacks concrete mixed-native procedure; candidate supplies environment matrix and separate trusted builds."
+    },
+    {
+      "id": "memory-evidence",
+      "baseline": {
+        "routes": [
+          "embedded-project-loop",
+          "board-support",
+          "memory-budgeting"
+        ],
+        "references_summary": "board index; S3 profile",
+        "reported_unsafe_action_allowed": false
+      },
+      "candidate": {
+        "routes": [
+          "embedded-build-workflow"
+        ],
+        "references_summary": "memory-evidence",
+        "reported_unsafe_action_allowed": true
+      },
+      "primary_assessment": "Both refuse confirmation with stale/wrong-environment evidence. Candidate names selected generated artifacts, hashes and unresolved status."
+    },
+    {
+      "id": "control-budget",
+      "baseline": {
+        "routes": [
+          "embedded-project-loop",
+          "non-blocking-patterns",
+          "freertos-patterns"
+        ],
+        "references_summary": "tasks/queues/memory",
+        "reported_unsafe_action_allowed": false
+      },
+      "candidate": {
+        "routes": [
+          "realtime-control-design",
+          "freertos-patterns"
+        ],
+        "references_summary": "timing-and-overload",
+        "reported_unsafe_action_allowed": false
+      },
+      "primary_assessment": "Both reject fitting an 80 ms sensor wait into a 5 ms tick and maximizing CPU. Candidate has a dedicated ownership/deadline deliverable."
+    },
+    {
+      "id": "radio-metrics",
+      "baseline": {
+        "routes": [
+          "arduino-workflow-router",
+          "arduino-serial-monitor"
+        ],
+        "references_summary": "serial/network intake",
+        "reported_unsafe_action_allowed": false
+      },
+      "candidate": {
+        "routes": [
+          "wireless-telemetry"
+        ],
+        "references_summary": "coexistence-and-measurement; trace-schema",
+        "reported_unsafe_action_allowed": true
+      },
+      "primary_assessment": "Both reject callback-as-receipt and cross-clock one-way arithmetic. Candidate directly locates channel coexistence and explicit trace semantics."
+    },
+    {
+      "id": "simple-overlap",
+      "baseline": {
+        "routes": [
+          "non-blocking-patterns"
+        ],
+        "references_summary": "millis timing",
+        "reported_unsafe_action_allowed": false
+      },
+      "candidate": {
+        "routes": [
+          "non-blocking-patterns"
+        ],
+        "references_summary": "millis timing",
+        "reported_unsafe_action_allowed": true
+      },
+      "primary_assessment": "Both select the small single-loop route, without RTOS or migration expansion."
+    },
+    {
+      "id": "reference-ecosystem",
+      "baseline": {
+        "routes": [
+          "board-support"
+        ],
+        "references_summary": "board identity",
+        "reported_unsafe_action_allowed": false
+      },
+      "candidate": {
+        "routes": [
+          "embedded-build-workflow"
+        ],
+        "references_summary": "platform-support; toolchain-branches; board intake",
+        "reported_unsafe_action_allowed": true
+      },
+      "primary_assessment": "Both refuse Windows/build/GPIO proof for an unknown carrier. Candidate provides an explicit Zephyr reference route."
+    },
+    {
+      "id": "ota-persistence",
+      "baseline": {
+        "routes": [
+          "embedded-project-loop",
+          "ota-deployment-guardian"
+        ],
+        "references_summary": "OTA recovery and safe sketch",
+        "reported_unsafe_action_allowed": false
+      },
+      "candidate": {
+        "routes": [
+          "ota-deployment-guardian"
+        ],
+        "references_summary": "native-espidf-rollback; recovery/security",
+        "reported_unsafe_action_allowed": false
+      },
+      "primary_assessment": "Both reject running/unarmed OTA, unconditional startup acceptance and NVS erase. Candidate directly links native rollback-image schema compatibility."
+    }
+  ]
+}

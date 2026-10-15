@@ -13,14 +13,14 @@ while the router composes the remaining specialists.
 Install the complete shared tree into the detected agent targets:
 
 ```bash
-npx skills add wedsamuel1230/arduino-skills
+npx skills add wedsamuel1230/embedded-engineering-skills
 ```
 
 To install one self-contained specialist from the repository, use the CLI's
 per-skill path selection:
 
 ```bash
-npx skills add wedsamuel1230/arduino-skills --skill pin-assignment
+npx skills add wedsamuel1230/embedded-engineering-skills --skill pin-assignment
 ```
 
 `board-support`, `board-selection`, `pin-assignment`, and the workflow router
@@ -41,8 +41,8 @@ this is an explicit repository marketplace rather than Codex's default personal
 marketplace, install it with:
 
 ```bash
-codex plugin marketplace add /path/to/arduino-skills
-codex plugin add arduino-skills@arduino-skills
+codex plugin marketplace add /path/to/embedded-engineering-skills
+codex plugin add embedded-engineering-skills@embedded-engineering-skills
 ```
 
 The Codex marketplace entry uses the host schema's local source object:
@@ -52,11 +52,11 @@ The Codex marketplace entry uses the host schema's local source object:
 ```
 
 For a published repository, use the Codex plugin marketplace flow for the
-repository URL, then install `arduino-skills` from the displayed marketplace:
+repository URL, then install `embedded-engineering-skills` from the displayed marketplace:
 
 ```bash
-codex plugin marketplace add https://github.com/wedsamuel1230/arduino-skills
-codex plugin add arduino-skills@arduino-skills
+codex plugin marketplace add https://github.com/wedsamuel1230/embedded-engineering-skills
+codex plugin add embedded-engineering-skills@embedded-engineering-skills
 ```
 
 The URL flow is the supported public-install path; use the local checkout form
@@ -69,7 +69,7 @@ Codex version before publishing a lock-step release.
 Test the local adapter:
 
 ```bash
-claude --plugin-dir /path/to/arduino-skills
+claude --plugin-dir /path/to/embedded-engineering-skills
 ```
 
 For distribution, add the repository's `.claude-plugin/marketplace.json` to the
@@ -93,16 +93,23 @@ or Agent Skills install path.
 Run these before publishing:
 
 ```bash
-python3 scripts/validate_agent_skills.py
-python3 scripts/validate_arduino_plugin.py
-python3 scripts/run_arduino_evals.py --output evals/eval-results.json
-UV_CACHE_DIR=/private/tmp/arduino-skills-uv-cache uv run --no-project --with pyyaml \
-  /Users/wed/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
+uv run --frozen python scripts/validate_agent_skills.py
+uv run --frozen python scripts/validate_arduino_skill_contract.py
+uv run --frozen python scripts/validate_arduino_plugin.py
+uv run --frozen python scripts/run_arduino_evals.py
+uv run --frozen python -m unittest discover -s tests -p test_embedded_workflows.py
+git diff --check
 ```
 
-The first validates each `SKILL.md`; the second checks links, manifests,
-triggers, eval fixtures, board references, and preserved baseline inventory; the
-third validates the Codex ingestion manifest.
+These validate skill frontmatter, the shared contract, links, provider manifests,
+board references, the retained deterministic cases and new offline behaviors.
+The Codex logo fields follow the current official plugin schema. An additional
+host-provided creator validator can run when available; no machine-specific
+system-skill path is required by this package.
+
+Distribute the whole plugin root: individual skill folders depend on shared
+references. The review ZIP omits caches, generated firmware, Git history and
+archived local workflow logs; those historical logs remain in the source repo.
 
 ## Source-of-truth rule
 
@@ -120,3 +127,16 @@ forward testing. Plugin scaffolding and Codex manifest checks follow the
 OpenAI `plugin-creator` guidance. The exact companion sources used during
 development are pinned in `skills-lock.json`; they are optional tooling and
 are not copied into this plugin's `skills/` payload.
+
+
+## 2.0 identity upgrade
+
+The new plugin namespace is `embedded-engineering-skills`. Existing hosts can
+still have `arduino-skills@arduino-skills` 1.8 cached; a GitHub redirect does not
+migrate plugin IDs. Record the current installed version first, disable/remove
+that old installation using the host UI, register the verified new repository
+or local source, then install the new ID. Confirm only one copy of each skill
+is discovered. Keep the old release/tag reference for rollback.
+
+This source change does not rewrite protected global host configuration or edit
+installed caches. A source/ZIP candidate is separate from a published release.

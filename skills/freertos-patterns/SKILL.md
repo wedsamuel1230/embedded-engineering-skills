@@ -41,6 +41,12 @@ Do not use this skill when:
 
 ## Workflow
 
+For a control system's task/resource ownership, action timing or deadline
+budget, start with `realtime-control-design`. Return here for the actual RTOS
+primitive. Native ESP-IDF uses its own port's stack units, affinity and critical
+section rules; do not copy an Arduino/RP2040 example into another framework
+without checking the selected SDK.
+
 1. Confirm the target platform first:
    - ESP32 -> FreeRTOS task model
    - RP2040 -> dual-core coordination model

@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "discovery": "skills/<name>/SKILL.md",
+  "categories": [
+    {
+      "id": "platforms",
+      "title": "Platforms and native runtimes",
+      "skills": [
+        "arduino-cli-skill",
+        "zephyr-development",
+        "stm32-development",
+        "pico-sdk-development",
+        "micropython-development"
+      ]
+    },
+    {
+      "id": "debugging",
+      "title": "Debugging and recovery",
+      "skills": [
+        "probe-debugging",
+        "fault-forensics",
+        "bus-debugging",
+        "boot-flash-recovery",
+        "memory-timing-debugging",
+        "usb-debugging",
+        "arduino-serial-monitor",
+        "circuit-debugger",
+        "error-message-explainer",
+        "i2c-bringup-diagnostician",
+        "field-power-and-connectivity-triager"
+      ]
+    },
+    {
+      "id": "build-and-workflow",
+      "title": "Build, CI and project workflow",
+      "skills": [
+        "embedded-build-workflow",
+        "arduino-workflow-router",
+        "embedded-project-loop",
+        "arduino-project-builder",
+        "library-selection",
+        "code-review-facilitator",
+        "hardware-tdd"
+      ]
+    },
+    {
+      "id": "runtime-and-connectivity",
+      "title": "Runtime, control and connectivity",
+      "skills": [
+        "arduino-code-generator",
+        "non-blocking-patterns",
+        "freertos-patterns",
+        "realtime-control-design",
+        "wireless-telemetry",
+        "ota-deployment-guardian"
+      ]
+    },
+    {
+      "id": "hardware-and-power",
+      "title": "Hardware, boards and power",
+      "skills": [
+        "board-selection",
+        "board-support",
+        "pin-assignment",
+        "wiring-safety-check",
+        "battery-selector",
+        "power-budget-calculator",
+        "bom-generator",
+        "datasheet-interpreter",
+        "enclosure-designer"
+      ]
+    },
+    {
+      "id": "sensors-and-memory",
+      "title": "Sensors, calibration and memory planning",
+      "skills": [
+        "sensor-calibration-workbench",
+        "sensor-signal-filtering",
+        "memory-budgeting"
+      ]
+    },
+    {
+      "id": "documentation",
+      "title": "Documentation and diagrams",
+      "skills": [
+        "readme-generator",
+        "mermaid-diagram-generator"
+      ]
+    }
+  ]
+}

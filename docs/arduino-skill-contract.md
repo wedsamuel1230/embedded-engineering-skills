@@ -1,4 +1,8 @@
-# Shared Arduino Skill Contract
+# Shared Embedded Skill Contract
+
+The filename is retained for compatibility. The contract now serves the
+**Embedded Engineering Skills** display identity and all explicit framework
+branches in [the support matrix](platform-support.md).
 
 This contract applies to every skill in this repository. It keeps the skill
 family useful across boards, frameworks, and host environments without making
@@ -77,6 +81,13 @@ If a command or library is only verified for one toolchain, label it as such.
 Do not silently translate a CLI, PlatformIO, or vendor command into an IDE
 workflow.
 
+For native/mixed projects, `embedded-build-workflow` owns build intake and
+environment enumeration. Its offline inspection output is not build proof.
+Use separate flash/PSRAM identity and generated-config provenance. Distinguish
+reference-only, build/host-validated and hardware-validated combinations;
+Zephyr, Pico SDK, STM32Cube and MicroPython branches earn only the fixture/host
+evidence actually recorded; a table entry alone is not executable proof.
+
 ## Evidence Stages
 
 Report evidence by stage. A passing earlier stage does not prove a later one:
@@ -97,7 +108,7 @@ substitute for hardware or system success.
 
 ## Pin declaration convention
 
-When the user requests pin declarations, preserve the repository convention:
+For requested C++ pin declarations, preserve the repository convention:
 raw `constexpr int` declarations, fixed numeric order starting at the user's
 required logical ID (for example `101, 102, 103, ...`), and no extra syntax or
 explanation in declarations-only output. Treat those logical IDs separately
@@ -164,3 +175,13 @@ Route a complete request through requirements, design, implementation, build,
 upload, hardware validation, system validation, deployment, and maintenance.
 Use a focused specialist directly when the user has already supplied the
 inputs and only one stage is in scope.
+
+
+## Language and runtime branch
+
+Use the user-selected framework's language/runtime. Native C and C++ firmware
+retain their respective compiler, startup and SDK conventions. Explicit
+MicroPython work uses Python and the selected port's `machine`, IRQ, ticks and
+heap APIs; do not emit C++ `constexpr` declarations into a `.py` application.
+Host Python automation uses UV, separately from target MicroPython execution.
+Rust has no active implementation route in this candidate.

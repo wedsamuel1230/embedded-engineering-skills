@@ -1,12 +1,27 @@
 {
-  "name": "arduino-skills",
-  "displayName": "Arduino Embedded Skills",
-  "version": "1.8.0",
-  "description": "Toolchain-neutral, hardware-aware Arduino and embedded development skills.",
+  "name": "embedded-engineering-skills",
+  "displayName": "Embedded Engineering Skills",
+  "version": "2.0.0",
+  "description": "Embedded workflows for Arduino, ESP-IDF, Zephyr, STM32Cube, Pico SDK and MicroPython, with target-specific debugging and explicit evidence.",
   "author": {
-    "name": "arduino-skills contributors",
-    "url": "https://github.com/wedsamuel1230/arduino-skills"
+    "name": "embedded-engineering-skills contributors",
+    "url": "https://github.com/wedsamuel1230/embedded-engineering-skills"
   },
   "license": "MIT",
-  "keywords": ["arduino", "embedded", "esp32", "rp2040", "hardware", "firmware"]
+  "keywords": [
+    "embedded",
+    "firmware",
+    "arduino",
+    "esp32",
+    "esp-idf",
+    "platformio",
+    "rtos",
+    "hardware",
+    "zephyr",
+    "rp2040",
+    "stm32",
+    "pico-sdk",
+    "micropython",
+    "debugging"
+  ]
 }

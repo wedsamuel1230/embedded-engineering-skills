@@ -1,6 +1,6 @@
 # Examples — Arduino CLI Workflows
 
-This folder contains concise, production-ready command sequences for common Arduino CLI workflows.
+This folder contains concise example command sequences for common Arduino CLI workflows.
 
 ## Windows PowerShell — Detect board and upload
 
@@ -27,9 +27,10 @@ arduino-cli compile --fqbn arduino:avr:uno /home/user/sketch
 # Upload (use /dev/serial/by-id/…)
 arduino-cli upload -p /dev/serial/by-id/usb-... --fqbn arduino:avr:uno /home/user/sketch
 
+```
+
 ## Notes
 
 - Replace the sketch path with your local project folder.
 - Prefer stable `/dev/serial/by-id` paths on Linux to avoid port changes between reboots.
 - For scripted workflows, consider `arduino-cli ... --format json` for machine-readable output.
-```

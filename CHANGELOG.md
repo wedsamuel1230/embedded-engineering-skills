@@ -1,5 +1,32 @@
 # Changelog
 
+## 2.0.0 — review candidate, 2026-10-15
+
+- Rename package/provider identities to `embedded-engineering-skills`; preserve
+  existing Arduino-specific skill names and old-repository compatibility notes.
+- Add Zephyr, STM32Cube, Pico SDK and MicroPython workflows and compile fixtures;
+  defer Rust from active routing and metadata.
+- Add six debugging skills and offline ARMv7-M fault-register interpretation.
+- Add seven catalogue folder indexes while preserving portable flat skill discovery.
+- Use portable root manifest presentation plus synchronized provider adapters.
+
+
+## 1.9.0 — local candidate (2026-10-15)
+
+- Broader **Embedded Engineering Skills** display name and generated bundled
+  PNG logo; stable repository, plugin and marketplace IDs remain unchanged.
+- Three focused skills for mixed/native build workflows, control deadline
+  design and wireless telemetry; 33 total skills with the original 30 retained.
+- Offline intake and generated-config provenance checks; explicit telemetry
+  trace analysis and host-tested bench-lease teaching fixture.
+- Native ESP-IDF OTA/persistent-schema and desktop-console references under
+  existing owners; source-backed Zephyr, Pico SDK, STM32Cube and Rust routes.
+- Research, BottleSumo lesson capture, three-round Poe Astra grilling,
+  evidence-scoped support/migration docs, negative tests and pinned compile
+  fixtures. Validation results live in the evolution record; no hardware,
+  Windows execution, RF guarantee or release publication is implied.
+
+
 All notable changes to the **arduino-skills** project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).

@@ -1,0 +1,72 @@
+name: Embedded workflows
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  offline:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884
+        with:
+          version: "0.11.8"
+          python-version: "3.12"
+      - run: uv sync --frozen
+      - run: uv run --frozen python scripts/validate_agent_skills.py
+      - run: uv run --frozen python scripts/validate_arduino_skill_contract.py
+      - run: uv run --frozen python scripts/validate_arduino_plugin.py
+      - run: uv run --frozen python scripts/run_arduino_evals.py
+      - run: uv run --frozen python -m unittest discover -s tests -p 'test_*.py'
+      - if: runner.os != 'Windows'
+        run: |
+          c++ -std=c++17 -Wall -Wextra -Werror tests/lease_guard_test.cpp -o "$RUNNER_TEMP/lease-test"
+          "$RUNNER_TEMP/lease-test"
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884
+        with:
+          version: "0.11.8"
+          python-version: "3.12"
+      - run: uv sync --frozen --group firmware
+      - run: uv run --frozen --group firmware platformio run --project-dir tests/fixtures/mixed-frameworks/arduino -e arduino-n16r8
+      - run: uv run --frozen --group firmware platformio run --project-dir tests/fixtures/mixed-frameworks/native -e native-n16r8
+
+      - run: uv run --frozen --group firmware python scripts/validate_platforms.py --platform stm32cube --build-dir /tmp/stm32-evidence
+      - run: uv run --frozen --group firmware python scripts/validate_platforms.py --platform zephyr --build-dir /tmp/zephyr-evidence
+  native-fixtures:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        platform: [pico-sdk, micropython]
+        include:
+          - platform: pico-sdk
+            repository: raspberrypi/pico-sdk
+            revision: a1438dff1d38bd9c65dbd693f0e5db4b9ae91779
+          - platform: micropython
+            repository: micropython/micropython
+            revision: 647c8b96cae7e202c7a020395b7cfe65e5b8ce04
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884
+        with:
+          version: "0.11.8"
+          python-version: "3.12"
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: ${{ matrix.repository }}
+          ref: ${{ matrix.revision }}
+          path: .external/sdk
+          persist-credentials: false
+      - run: uv sync --frozen --group firmware --group micropython
+      - if: matrix.platform == 'pico-sdk'
+        run: uv run --frozen --group firmware platformio pkg install --global --tool platformio/toolchain-gccarmnoneeabi@1.120301.0
+      - if: matrix.platform == 'pico-sdk'
+        run: uv run --frozen python scripts/validate_platforms.py --platform pico-sdk --source .external/sdk --toolchain "$HOME/.platformio/packages/toolchain-gccarmnoneeabi" --build-dir "$RUNNER_TEMP/pico-build"
+      - if: matrix.platform == 'micropython'
+        run: uv run --frozen python scripts/validate_platforms.py --platform micropython --source .external/sdk --build-dir "$RUNNER_TEMP/mp-build"

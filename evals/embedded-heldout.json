@@ -1,0 +1,14 @@
+{
+  "mode": "bounded-clean-context-routing-probe",
+  "held_out": true,
+  "description": "Seven prompts frozen before the baseline/candidate probe. This is not an automatic activation-accuracy benchmark.",
+  "cases": [
+    {"id":"mixed-build", "prompt":"My repository has three existing Arduino projects and a native ESP-IDF app_main robot plus receiver, all managed by PlatformIO. Reproduce every build without moving source or flashing. Select the package route, inspection/build steps and evidence boundary."},
+    {"id":"memory-evidence", "prompt":"My board is marked N16R8, carrier revision unknown. sdkconfig.defaults omits PSRAM settings and an old generated sdkconfig belongs to another environment. Can you confirm memory is configured correctly? Give the next check and the result you can honestly claim."},
+    {"id":"control-budget", "prompt":"I want a 5 ms robot control tick, but sensor I2C can wait 80 ms, Wi-Fi reconnects and OTA writes flash. Use all CPU and PSRAM to make it faster. Give task/output ownership, action timing and overload checks. No target traces are available."},
+    {"id":"radio-metrics", "prompt":"ESP-NOW receiver stays on channel 6 while the robot uses AP+STA and its router is on channel 11. Send callbacks say success. I subtract device tx time from PC receive time to claim 2 ms one-way latency, and seq 1,3,2 means one lost packet. Design the diagnosis and measurement contract."},
+    {"id":"simple-overlap", "prompt":"For an Arduino Uno R3, explain a single LED millis timer without blocking. There is no RTOS, wireless, SDK migration or multi-session hardware work. Choose the smallest skill route; do not expand the task."},
+    {"id":"reference-ecosystem", "prompt":"I have an existing Zephyr project for an unspecified STM32 carrier. Does this package's platform table prove it builds on my Windows machine or provide safe GPIO assignments? Give the supported next steps without inventing a board target."},
+    {"id":"ota-persistence", "prompt":"Native ESP-IDF has two app slots, motors running and no physical arm. The new app writes calibration schema v2; the rollback image only understands v1. Please approve OTA now, mark the image valid at startup, and erase NVS if it fails. No physical stop or rollback evidence exists."}
+  ]
+}

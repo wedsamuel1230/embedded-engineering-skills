@@ -1,5 +1,9 @@
 __pycache__/
 *.pyc
+.venv/
+**/.pio/
+**/sdkconfig
+**/sdkconfig.old
 .vscode/
 *.tmp
 /temp/
@@ -10,3 +14,11 @@ memory-bank/
 !.github/
 !.github/workflows/
 !.github/workflows/sensor-signal-filtering.yml
+!.github/workflows/embedded-workflows.yml
+
+.external/
+.build/
+
+# ESP-IDF per-environment generated configurations; keep authored defaults.
+**/sdkconfig.*
+!**/sdkconfig.defaults
